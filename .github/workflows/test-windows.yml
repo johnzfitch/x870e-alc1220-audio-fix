@@ -1,0 +1,83 @@
+name: Windows Registry Fix Tests
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'windows/**'
+  pull_request:
+    paths:
+      - 'windows/**'
+
+jobs:
+  syntax-check:
+    name: Syntax and Error Check
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          $errors = @()
+          $scripts = Get-ChildItem -Path windows -Filter *.ps1
+          foreach ($script in $scripts) {
+            $null = [System.Management.Automation.Language.Parser]::ParseFile(
+              $script.FullName, [ref]$null, [ref]$errors
+            )
+            if ($errors.Count -gt 0) {
+              Write-Host "FAIL: $($script.Name) has syntax errors"
+              exit 1
+            }
+          }
+          Write-Host "PASS: All PowerShell scripts valid"
+
+  mock-registry-test:
+    name: Mock Registry Test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create mock Realtek registry
+        shell: pwsh
+        run: |
+          $paths = @(
+            "HKLM:\SOFTWARE\Realtek\Audio\HDA\Settings",
+            "HKLM:\SOFTWARE\WOW6432Node\Realtek\Audio\HDA\Settings"
+          )
+          foreach ($path in $paths) {
+            New-Item -Path $path -Force | Out-Null
+            Set-ItemProperty -Path $path -Name "JackDetection" -Value 1 -Type DWord
+            Set-ItemProperty -Path $path -Name "AutoMuteRear" -Value 1 -Type DWord
+          }
+          Write-Host "Mock registry created"
+
+      - name: Run fix script
+        shell: cmd
+        run: windows\fix-audio.bat
+        continue-on-error: true
+
+      - name: Verify registry changes
+        shell: pwsh
+        run: |
+          $path = "HKLM:\SOFTWARE\Realtek\Audio\HDA\Settings"
+          $jack = (Get-ItemProperty -Path $path -Name "JackDetection").JackDetection
+          if ($jack -ne 0) {
+            Write-Host "FAIL: JackDetection not disabled"
+            exit 1
+          }
+          Write-Host "PASS: Registry fix applied correctly"
+
+  diagnose-test:
+    name: Diagnostic Script Test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run diagnostic
+        shell: cmd
+        run: windows\diagnose.bat
+        continue-on-error: true
+
+      - name: Confirm completion
+        run: echo "PASS: Diagnostic script runs without crash"

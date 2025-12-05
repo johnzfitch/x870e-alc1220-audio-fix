@@ -6,10 +6,12 @@
 
 ## <img src=".github/assets/icons/tick.png" width="24" height="24"> Quick Start (New Users Start Here)
 
-| Platform | Guide |
-|----------|-------|
-| <img src=".github/assets/icons/windows.png" width="20" height="20"> **Windows** | [Windows Quick Start Guide](windows/QUICK-START.md) |
-| <img src=".github/assets/icons/linux.png" width="20" height="20"> **Linux** | [Linux Quick Start Guide](linux/QUICK-START.md) |
+| Platform | Guide | Status |
+|----------|-------|--------|
+| <img src=".github/assets/icons/windows.png" width="20" height="20"> **Windows** | [Windows Quick Start Guide](windows/QUICK-START.md) | <img src=".github/assets/icons/warning.png" width="16" height="16"> Needs Testing |
+| <img src=".github/assets/icons/linux.png" width="20" height="20"> **Linux** | [Linux Quick Start Guide](linux/QUICK-START.md) | <img src=".github/assets/icons/tick.png" width="16" height="16"> Verified |
+
+> **Help wanted!** We need Windows testers. See [TESTING.md](TESTING.md) for details.
 
 ---
 
