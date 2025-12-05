@@ -1,12 +1,19 @@
-# Realtek ALC1220 Audio Fix - Gigabyte X870E
+# <img src=".github/assets/icons/sound.png" width="28" height="28"> Realtek ALC1220 Audio Fix
 
-**Hardware**: Gigabyte X870E AORUS AI TOP
-**Audio Codec**: Realtek ALC1220
-**Status**: FIXED - Headphones and speakers work simultaneously
+**Use headphones AND speakers at the same time on your Gigabyte X870E motherboard.**
 
 ---
 
-## Problem
+## <img src=".github/assets/icons/tick.png" width="24" height="24"> Quick Start (New Users Start Here)
+
+| Platform | Guide |
+|----------|-------|
+| <img src=".github/assets/icons/windows.png" width="20" height="20"> **Windows** | [Windows Quick Start Guide](windows/QUICK-START.md) |
+| <img src=".github/assets/icons/linux.png" width="20" height="20"> **Linux** | [Linux Quick Start Guide](linux/QUICK-START.md) |
+
+---
+
+## The Problem
 
 On Gigabyte X870E motherboards with Realtek ALC1220, plugging headphones into the front panel jack automatically mutes the rear speaker/line-out (auto-mute feature). Users cannot use both outputs simultaneously or independently route audio to each.
 
