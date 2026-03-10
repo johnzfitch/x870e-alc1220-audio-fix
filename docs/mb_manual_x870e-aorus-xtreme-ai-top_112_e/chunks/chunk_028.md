@@ -1,0 +1,2 @@
+<!-- Chunk 28 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 64 -->
+The USB 3.2 Gen 2 port supports the USB 3.2 Gen 2 specification and is compatible to the USB 3.2 Gen 1 and USB 2.0 specification. Use this port for USB devices. Before using Q-Flash Plus (Note 1), make sure to insert the USB flash drive into this port first.

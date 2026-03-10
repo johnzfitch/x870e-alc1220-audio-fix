@@ -1,0 +1,4 @@
+<!-- Chunk 29 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 190 -->
+This port supports standard USB4® USB Type-C® and DisplayPort display output. You can connect a USB4® USB Type-C® monitor to this port or use an adapter cable to connect a standard DisplayPort monitor. The maximum supported resolution is 3840x2160@240 Hz when using a DisplayPort monitor, but the actual resolutions supported are dependent on the monitor being used. Also, the connector is reversible and supports the USB4® specification and is compatible to the USB 3.2 Gen 2x2, USB 3.2 Gen 2, USB 3.2 Gen 1, and USB 2.0 specifications. You can use this port for USB devices, too.  
+(Note 1) To enable the Q-Flash Plus function, please navigate to the "Unique Features" page of GIGABYTE's website for more information.  
+(Note 2) Actual support may vary by CPU.

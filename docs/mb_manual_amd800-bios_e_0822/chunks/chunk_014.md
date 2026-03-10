@@ -1,0 +1,2 @@
+<!-- Chunk 14 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 38 -->
+Allows the system to emit warning sound if the fan/pump is not connected or fails. Check the fan/pump condition or fan/pump connection when this occurs.

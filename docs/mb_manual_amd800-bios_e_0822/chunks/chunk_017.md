@@ -1,0 +1,3 @@
+<!-- Chunk 17 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 85 -->
+![](images/_page_7_Figure_1.jpeg)  
+Set your frequently used options as your favorites and use the <F11> key to quickly switch to the page where all of your favorite options are located. To add or remove a favorite option, go to its original page and press <Insert> on the option. The option is marked with a star sign if set as a "favorite."

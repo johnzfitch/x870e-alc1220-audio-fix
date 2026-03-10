@@ -1,0 +1,2 @@
+<!-- Chunk 93 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 39 -->
+Disabled Disables booting from the network. Enabled Enables booting from the network. This item is configurable only when **Fast Boot** is set to **Enabled**.

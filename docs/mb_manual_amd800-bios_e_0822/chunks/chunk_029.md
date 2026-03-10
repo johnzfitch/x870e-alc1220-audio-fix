@@ -1,0 +1,2 @@
+<!-- Chunk 29 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 50 -->
+Enables or disables the DDR5 Dynamic Turbo Boost feature, which allows automatic switching between default frequency and boosted frequency. **Auto** lets the BIOS automatically configure this setting.

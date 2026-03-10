@@ -30,12 +30,12 @@ echo.
 
 echo [2/4] Checking for audio devices...
 echo.
-wmic sounddev get name,status 2>nul
+powershell -NoProfile -Command "Get-CimInstance Win32_SoundDevice | Select-Object Name, Status | Format-Table -AutoSize"
 echo.
 
 echo [3/4] Checking Realtek driver version...
 echo.
-wmic datafile where name="C:\\Windows\\System32\\drivers\\RTKVHD64.sys" get version 2>nul
+powershell -NoProfile -Command "$driver = Get-CimInstance Win32_PnPSignedDriver | Where-Object { $_.DeviceName -like '*Realtek*' -and $_.DeviceClass -eq 'MEDIA' } | Select-Object -First 1 -ExpandProperty DriverVersion; if ($driver) { $driver } else { exit 1 }"
 if %errorLevel% neq 0 (
     echo   Realtek driver not found at standard location
 )
@@ -43,17 +43,21 @@ echo.
 
 echo [4/4] Current JackDetection and AutoMute settings...
 echo.
-echo JackDetection:
+echo Native hive - JackDetection:
 reg query "HKLM\SOFTWARE\Realtek\Audio\HDA\Settings" /v JackDetection 2>nul
-if %errorLevel% neq 0 (
-    echo   Not set (using default)
-)
+if %errorLevel% neq 0 echo   Not set (using default)
 echo.
-echo AutoMuteRear:
+echo Native hive - AutoMuteRear:
 reg query "HKLM\SOFTWARE\Realtek\Audio\HDA\Settings" /v AutoMuteRear 2>nul
-if %errorLevel% neq 0 (
-    echo   Not set (using default)
-)
+if %errorLevel% neq 0 echo   Not set (using default)
+echo.
+echo WOW6432Node hive - JackDetection:
+reg query "HKLM\SOFTWARE\WOW6432Node\Realtek\Audio\HDA\Settings" /v JackDetection 2>nul
+if %errorLevel% neq 0 echo   Not set (using default)
+echo.
+echo WOW6432Node hive - AutoMuteRear:
+reg query "HKLM\SOFTWARE\WOW6432Node\Realtek\Audio\HDA\Settings" /v AutoMuteRear 2>nul
+if %errorLevel% neq 0 echo   Not set (using default)
 echo.
 
 echo === Diagnostic Complete ===

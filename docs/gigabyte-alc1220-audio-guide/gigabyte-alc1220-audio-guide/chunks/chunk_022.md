@@ -1,0 +1,2 @@
+<!-- Chunk 22 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 61 -->
+Connect your headphones to the front panel line out jack and make sure your Internet connection works properly, Locate the icon in the notification area and right-click on the icon. Click on **Spatial Sound** and then select **DTS Sound Unbound**.

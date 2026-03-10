@@ -1,0 +1,2 @@
+<!-- Chunk 82 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 58 -->
+Sets the system time. The time format is hour, minute, and second. For example, 1 p.m. is 13:00:00. Use <Enter> to switch between the Hour, Minute, and Second fields and use the <Page Up> or <Page Down> key to set the desired value.

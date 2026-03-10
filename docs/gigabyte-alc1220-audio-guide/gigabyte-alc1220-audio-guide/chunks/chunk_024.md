@@ -1,0 +1,2 @@
+<!-- Chunk 24 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 34 -->
+After the DTS Sound Unbound application is installed, click **Launch**. Accept the **End User License Agreement** and restart the system.

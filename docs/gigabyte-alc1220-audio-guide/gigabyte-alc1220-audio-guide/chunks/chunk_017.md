@@ -1,0 +1,4 @@
+<!-- Chunk 17 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 155 -->
+The recordings will saved in Documents>Sound Recordings. Voice Recorder records audio in MPEG-4 (.m4a) format. You can play the recording with a digital media player program that supports the audio file format.  
+#### <span id="page-9-0"></span>**1-5 DTS:X® Ultra**  
+Hear what you have been missing! DTS:X® Ultra technology is designed to enhance your gaming, movies, AR, and VR experiences on headphones and speakers. It delivers an advanced audio solution that renders sounds above, around, and close to you, stepping up your game play to new levels. Now with support for Microsoft Spatial sound. Key features include:

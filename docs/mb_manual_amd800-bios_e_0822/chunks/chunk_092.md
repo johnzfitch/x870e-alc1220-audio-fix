@@ -1,0 +1,3 @@
+<!-- Chunk 92 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 82 -->
+Disabled All USB devices are disabled before the OS boot process completes. Full Initial All USB devices are functional in the operating system and during the POST. Partial Initial Part of the USB devices are disabled before the OS boot process completes.  
+This item is configurable only when **Fast Boot** is set to **Enabled**.

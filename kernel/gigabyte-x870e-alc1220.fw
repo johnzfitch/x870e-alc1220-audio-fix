@@ -1,0 +1,9 @@
+[codec]
+0x10ec1220 0x1458a0d5 0
+
+[pincfg]
+0x14 0x0221401f
+0x1b 0x01014010
+
+[model]
+gb-aorus-no-automute

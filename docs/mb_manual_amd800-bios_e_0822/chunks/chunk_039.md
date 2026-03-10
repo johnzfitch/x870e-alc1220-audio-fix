@@ -1,0 +1,2 @@
+<!-- Chunk 39 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 38 -->
+These items allow you to adjust the CPU Vcore and memory voltages. The displayed items values may vary depending on motherboard chipset and the CPU used.

@@ -83,18 +83,22 @@ foreach ($path in $regPaths) {
 # Test 5: Apply Fix
 Write-Host ""
 Write-Host "[TEST 5] Applying Registry Fix" -ForegroundColor Yellow
-$fixScript = Join-Path $PSScriptRoot "..\fix-audio.bat"
+$fixScript = Join-Path $PSScriptRoot "..\fix-audio.ps1"
 if (Test-Path $fixScript) {
-    & cmd /c $fixScript
-    Write-Test "Fix script executed" $true
+    try {
+        & $fixScript
+        Write-Test "Fix script executed" $true $fixScript
+    } catch {
+        Write-Test "Fix script executed" $false $_.Exception.Message
+    }
 } else {
     # Apply fix directly
     foreach ($path in $regPaths) {
         if (-not (Test-Path $path)) {
             New-Item -Path $path -Force | Out-Null
         }
-        Set-ItemProperty -Path $path -Name "JackDetection" -Value 0 -Type DWord -Force
-        Set-ItemProperty -Path $path -Name "AutoMuteRear" -Value 0 -Type DWord -Force
+        New-ItemProperty -Path $path -Name "JackDetection" -Value 0 -PropertyType DWord -Force | Out-Null
+        New-ItemProperty -Path $path -Name "AutoMuteRear" -Value 0 -PropertyType DWord -Force | Out-Null
     }
     Write-Test "Fix applied directly" $true
 }

@@ -1,0 +1,3 @@
+<!-- Chunk 8 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 133 -->
+The Smart Headphone Amp feature automatically detects impedance of your head-worn audio device, whether earbuds or high-end headphones to provide optimal audio dynamics. To enable this feature, connect your head-worn audio device to the Line out jack on the rear panel and then go to the **Speaker** page. Enable the **Smart Headphone Amp** feature. The **Headphone Power** list below allows you to manually set the level of headphone volume, preventing the volume from being too high or too low.  
+![](images/_page_4_Picture_4.jpeg)

@@ -1,0 +1,2 @@
+<!-- Chunk 99 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 49 -->
+Press <Enter> on this item and select **Yes**. This exits the BIOS Setup without saving the changes made in BIOS Setup to the CMOS. Select **No** or press <Esc> to return to the BIOS Setup Main Menu.

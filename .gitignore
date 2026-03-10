@@ -9,5 +9,18 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Logs
+# Logs (but keep probe logs — they're documentation)
 *.log
+!kernel/probe-logs/*.log
+
+# Large binaries — reference locally, don't commit
+drivers/bios/*.zip
+drivers/bios/*.F11
+drivers/bios/EFI/
+drivers/bios/Efiflash.efi
+drivers/realtek/*.zip
+drivers/realtek/*.exe
+windows/*.zip
+
+# Local tooling
+.mcp.json

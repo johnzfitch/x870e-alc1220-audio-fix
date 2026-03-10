@@ -35,19 +35,27 @@ Run PowerShell as Administrator:
 .\fix-audio.ps1
 ```
 
-Or use the registry fix:
+Or use the batch wrapper:
 
-```powershell
-.\fix-audio-registry.ps1
+```bat
+fix-audio.bat
 ```
+
+`fix-audio-registry.ps1` remains available as a compatibility alias to `fix-audio.ps1`.
 
 ## Files
 
 | File | Description |
 |------|-------------|
-| `fix-audio.ps1` | Automated fix via Realtek settings |
-| `fix-audio-registry.ps1` | Registry-based fix |
+| `fix-audio.ps1` | Primary PowerShell fix that updates Realtek registry settings |
+| `fix-audio.bat` | Administrator-friendly wrapper for `fix-audio.ps1` |
+| `fix-audio-registry.ps1` | Compatibility alias to `fix-audio.ps1` |
 | `restore-defaults.ps1` | Restore default auto-mute behavior |
+| `restore-defaults.bat` | Wrapper for `restore-defaults.ps1` |
+
+## How Windows Controls This
+
+Windows does not expose the rear speakers and front headphones as separate hardware cards. The Realtek driver owns one codec and decides whether the front jack should mute the rear line-out. The GUI setting in Realtek HD Audio Manager or Realtek Audio Console is the authoritative control surface, while the scripts in this folder are a best-effort way to write the same driver settings in the registry and then reboot so the driver reloads them.
 
 ## Realtek Audio Console (Windows Store)
 
@@ -75,6 +83,10 @@ Realtek drivers v2.67+ removed some options. Install older driver (v2.62) from G
 ### No Second Audio Device
 
 After enabling dual stream mode, restart Windows for the second device to appear.
+
+### Automated Fix Runs But Audio Behavior Does Not Change
+
+Some Realtek driver packages do not honor these registry keys. If that happens, use Realtek HD Audio Manager or Realtek Audio Console directly and verify the advanced playback settings there.
 
 ## Driver Downloads
 

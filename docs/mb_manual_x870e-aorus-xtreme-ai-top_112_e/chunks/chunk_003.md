@@ -1,0 +1,2 @@
+<!-- Chunk 3 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 64 -->
+The revision number on your motherboard looks like this: "REV: X.X." For example, "REV: 1.0" means the revision of the motherboard is 1.0. Check your motherboard revision before updating motherboard BIOS, drivers, or when looking for technical information.

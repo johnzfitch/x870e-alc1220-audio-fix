@@ -1,0 +1,2 @@
+<!-- Chunk 77 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 90 -->
+Displays the detection status of the chassis intrusion detection device attached to the motherboard CI header. If the system chassis cover is removed, this field will show "Yes", otherwise it will show "No". To clear the chassis intrusion status record, set **Reset Case Open Status** to **Enabled**, save the settings to the CMOS, and then restart your system.

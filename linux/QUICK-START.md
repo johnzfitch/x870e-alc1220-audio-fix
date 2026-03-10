@@ -49,22 +49,22 @@ sudo dnf install alsa-utils
 Copy and paste these commands one at a time:
 
 ```bash
-# Find your sound card number (look for "Realtek ALC1220")
-cat /proc/asound/cards
+# Resolve the Realtek ALC1220 card dynamically
+CARD="$(for codec in /proc/asound/card*/codec*; do grep -q '^Codec: Realtek ALC1220$' "$codec" 2>/dev/null && card="${codec%/codec*}" && echo "${card##*card}" && break; done)"
 ```
 
-The ALC1220 is usually card **2**, but check the output above. Then run:
+Then run:
 
 ```bash
-# Disable auto-mute (change the 2 if your card is different)
-amixer -c 2 cset numid=9 0
+# Disable auto-mute
+amixer -c "$CARD" cset name='Auto-Mute Mode' Disabled
 
 # Turn on both outputs
-amixer -c 2 cset numid=2 on,on
-amixer -c 2 cset numid=3 on,on
+amixer -c "$CARD" cset name='Line Out Playback Switch' on,on
+amixer -c "$CARD" cset name='Headphone Playback Switch' on,on
 
 # Set volume to max
-amixer -c 2 sset Master 100%
+amixer -c "$CARD" sset Master 100%
 
 # Save settings so they stick after reboot
 sudo alsactl store
@@ -93,12 +93,17 @@ You should see:
 
 ## Undo the Changes
 
-If you want speakers to mute when headphones are plugged in (default behavior):
+If you want speakers to mute when headphones are plugged in (default behavior), re-run the card lookup if needed, then restore:
 
 ```bash
-amixer -c 2 cset numid=9 1
+# Re-detect card (skip if $CARD is still set from Step 3)
+CARD="$(for codec in /proc/asound/card*/codec*; do grep -q '^Codec: Realtek ALC1220$' "$codec" 2>/dev/null && card="${codec%/codec*}" && echo "${card##*card}" && break; done)"
+
+amixer -c "$CARD" cset name='Auto-Mute Mode' Enabled
 sudo alsactl store
 ```
+
+Or use the restore script: `./restore-automute.sh`
 
 ---
 
@@ -107,8 +112,8 @@ sudo alsactl store
 ### "amixer: command not found"
 Install alsa-utils (see Step 2 above)
 
-### "Card 2 not found" or wrong card
-Run `cat /proc/asound/cards` and find which card number has "Realtek ALC1220", then use that number instead of 2
+### Card lookup fails
+Run `cat /proc/asound/cards` and confirm your system exposes a card with `Realtek ALC1220` in `/proc/asound/card*/codec*`
 
 ### Settings don't survive reboot
 Make sure you ran `sudo alsactl store` after making changes

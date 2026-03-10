@@ -1,0 +1,2 @@
+<!-- Chunk 100 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 63 -->
+Press <Enter> on this item and select **Yes** to load the BIOS factory default settings. The BIOS defaults settings help the system to operate in optimum state. Always load the Optimized defaults after updating the BIOS or after clearing the CMOS values.

@@ -1,0 +1,2 @@
+<!-- Chunk 62 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 39 -->
+Allows you to configure how long to wait before you can press <Esc> to abort the PXE boot. This item is configurable only when **Network Stack** is enabled.

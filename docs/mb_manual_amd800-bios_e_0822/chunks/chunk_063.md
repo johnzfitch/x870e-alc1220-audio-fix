@@ -1,0 +1,2 @@
+<!-- Chunk 63 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 33 -->
+Allows you to set the number of times to check the presence of media. This item is configurable only when **Network Stack** is enabled.
