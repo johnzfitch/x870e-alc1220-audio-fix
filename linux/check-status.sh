@@ -60,7 +60,7 @@ show_value "iface=MIXER,name='Headphone Playback Switch'"
 echo
 
 echo "Master Volume:"
-amixer -c "$CARD" sget Master 2>/dev/null | grep "Mono:" | sed 's/.*Mono:/  /'
+amixer -c "$CARD" sget Master 2>/dev/null | grep -E "Mono:|Front Left:" | head -1 | sed 's/.*\(Mono\|Front Left\):/  /' || echo "  (not available)"
 echo
 
 echo "Jack Detection:"

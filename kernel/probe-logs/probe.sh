@@ -33,6 +33,10 @@ CODEC_FILE=$(ls /proc/asound/card${CARD}/codec* 2>/dev/null | head -1)
 [ -r "$CODEC_FILE" ] || die "Cannot read $CODEC_FILE"
 [ -c "$HWDEV" ] || die "hwdep device $HWDEV not found (need root?)"
 
+# Derive PCI path for PipeWire sink matching (e.g. "pci-0000_7a_00.6")
+PCI_PATH=$(readlink -f /sys/class/sound/card${CARD}/device 2>/dev/null | xargs basename 2>/dev/null | tr ':.' '_' || true)
+[ -n "$PCI_PATH" ] && PCI_PATH="pci-${PCI_PATH}" || PCI_PATH=""
+
 header() {
     echo "=============================================================================="
     echo "$1"
@@ -121,10 +125,13 @@ echo
 # --- 9. PipeWire sinks ---
 
 header "9. PIPEWIRE SINKS"
-if command -v pactl &>/dev/null; then
-    pactl list sinks short 2>/dev/null | grep -i "pci-0000_7a_00.6\|Generic_1\|alc1220" || echo "  (no matching sinks)"
+if command -v pactl &>/dev/null && [ -n "$PCI_PATH" ]; then
+    pactl list sinks short 2>/dev/null | grep -i "${PCI_PATH}\|Generic_1\|alc1220" || echo "  (no matching sinks)"
     echo
     echo "All sinks:"
+    pactl list sinks short 2>/dev/null || echo "  (pactl failed)"
+elif command -v pactl &>/dev/null; then
+    echo "  (could not derive PCI path, showing all sinks)"
     pactl list sinks short 2>/dev/null || echo "  (pactl failed)"
 else
     echo "  pactl not available"
@@ -162,7 +169,10 @@ else
 fi
 
 # Count PipeWire sinks for this card
-pw_count=$(pactl list sinks short 2>/dev/null | grep -c "pci-0000_7a_00.6" || true)
+pw_count=0
+if command -v pactl &>/dev/null && [ -n "$PCI_PATH" ]; then
+    pw_count=$(pactl list sinks short 2>/dev/null | grep -c "$PCI_PATH" || true)
+fi
 echo "  PipeWire sinks for ALC1220: $pw_count"
 
 echo

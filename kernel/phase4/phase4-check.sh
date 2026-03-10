@@ -34,6 +34,11 @@ if [ -z "$alc_card" ]; then
     exit 1
 fi
 echo "  Card: $alc_card"
+
+# Derive PCI path for PipeWire sink matching (e.g. "pci-0000_7a_00.6")
+pci_path=$(readlink -f /sys/class/sound/card${alc_card}/device 2>/dev/null | xargs basename 2>/dev/null | tr ':.' '_' || true)
+[ -n "$pci_path" ] && pci_path="pci-${pci_path}" || pci_path=""
+echo "  PCI path: ${pci_path:-(could not derive)}"
 echo
 
 analog_pcms=0
@@ -53,32 +58,35 @@ echo
 # --- 2. PipeWire cards & profiles ---
 
 header "2. PIPEWIRE CARD PROFILES"
-if command -v pactl &>/dev/null; then
+if command -v pactl &>/dev/null && [ -n "$pci_path" ]; then
     echo "Available profiles for ALC1220 card:"
-    pactl list cards 2>/dev/null | awk '/pci-0000_7a_00.6/{found=1} found && /Profiles:/{prof=1} prof && /^$/{prof=0} prof{print}' || echo "  (could not list)"
+    pactl list cards 2>/dev/null | awk -v pat="$pci_path" '$0 ~ pat{found=1} found && /Profiles:/{prof=1} prof && /^$/{prof=0} prof{print}' || echo "  (could not list)"
     echo
     echo "Active profile:"
-    pactl list cards 2>/dev/null | awk '/pci-0000_7a_00.6/{found=1} found && /Active Profile:/{print; found=0}' || echo "  (could not determine)"
+    pactl list cards 2>/dev/null | awk -v pat="$pci_path" '$0 ~ pat{found=1} found && /Active Profile:/{print; found=0}' || echo "  (could not determine)"
 else
-    echo "  pactl not available"
+    echo "  pactl not available or PCI path unknown"
 fi
 echo
 
 # --- 3. PipeWire sinks ---
 
 header "3. PIPEWIRE SINKS"
-if command -v pactl &>/dev/null; then
+alc_sinks=0
+if command -v pactl &>/dev/null && [ -n "$pci_path" ]; then
     echo "All sinks:"
     pactl list sinks short 2>/dev/null || echo "  (failed)"
     echo
     echo "ALC1220-related sinks:"
-    alc_sinks=$(pactl list sinks short 2>/dev/null | grep -c "pci-0000_7a_00.6" || true)
-    pactl list sinks short 2>/dev/null | grep "pci-0000_7a_00.6" || echo "  (none)"
+    alc_sinks=$(pactl list sinks short 2>/dev/null | grep -c "$pci_path" || true)
+    pactl list sinks short 2>/dev/null | grep "$pci_path" || echo "  (none)"
     echo
     echo "  Count: $alc_sinks"
+elif command -v pactl &>/dev/null; then
+    echo "  (PCI path unknown, showing all sinks)"
+    pactl list sinks short 2>/dev/null || echo "  (failed)"
 else
     echo "  pactl not available"
-    alc_sinks=0
 fi
 echo
 
@@ -86,7 +94,8 @@ echo
 
 header "4. PIPEWIRE OUTPUT NODES"
 if command -v pw-cli &>/dev/null; then
-    pw-cli ls Node 2>/dev/null | grep -B2 -A5 "pci-0000_7a_00.6\|ALC1220\|Generic_1" || echo "  (none matching)"
+    match="${pci_path:-ALC1220}"
+    pw-cli ls Node 2>/dev/null | grep -B2 -A5 "${match}\|ALC1220\|Generic_1" || echo "  (none matching)"
 else
     echo "  pw-cli not available"
 fi
@@ -95,15 +104,15 @@ echo
 # --- 5. Sink ports ---
 
 header "5. SINK PORTS (per-sink)"
-if command -v pactl &>/dev/null; then
-    pactl list sinks 2>/dev/null | awk '
-        /Name:.*pci-0000_7a_00.6/{found=1; print}
+if command -v pactl &>/dev/null && [ -n "$pci_path" ]; then
+    pactl list sinks 2>/dev/null | awk -v pat="$pci_path" '
+        /Name:/ && $0 ~ pat {found=1; print}
         found && /Ports:/{ports=1}
         ports && /^$/{ports=0; found=0}
         ports{print}
     ' || echo "  (could not list)"
 else
-    echo "  pactl not available"
+    echo "  pactl not available or PCI path unknown"
 fi
 echo
 
@@ -120,7 +129,7 @@ elif [ "$analog_pcms" -ge 2 ] && [ "$alc_sinks" -eq 1 ]; then
     echo "    cp 51-alc1220-dual-sink.lua ~/.config/wireplumber/wireplumber.conf.d/"
     echo "    systemctl --user restart wireplumber pipewire"
     echo "  Or try pro-audio profile:"
-    echo "    pactl set-card-profile alsa_card.pci-0000_7a_00.6 pro-audio"
+    [ -n "$pci_path" ] && echo "    pactl set-card-profile alsa_card.${pci_path} pro-audio"
 elif [ "$analog_pcms" -eq 1 ]; then
     echo "  ONE PCM — kernel did not create a second analog output."
     echo "  Phase 3 kernel patch may need VARIANT C (forced connection override)."
