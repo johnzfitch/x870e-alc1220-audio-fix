@@ -104,7 +104,7 @@ Go to the Start menu click the **Realtek Audio Console**. For speaker connection
 
 ### Step 2:
 
-Connect an audio device to an audio jack. The **Which device did you plut in ?** dialog box appears. Select the device according to the type of device you connect. Then click **OK**.
+Connect an audio device to an audio jack. The **Which device did you plug in ?** dialog box appears. Select the device according to the type of device you connect. Then click **OK**.
 
 ![](images/_page_3_Picture_6.jpeg)
 

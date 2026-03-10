@@ -9,5 +9,5 @@
 | Settings        |    |
 | System Info.    |    |
 | Boot            |    |
-| Savo & Evit     | 26 |  
+| Save & Exit     | 26 |  
 The BIOS Setup menus and options described in this chapter may differ from the exact settings for your motherboard. The actual BIOS Setup menu options are dependent on the motherboard you have and the BIOS version.

@@ -253,7 +253,7 @@ populated, the PCIEX16 slot operates at up to x8 mode.
 
 https://www.gigabyte.com/Support/Utility/Motherboard?m=ut
 
-<sup>&</sup>amp; Please visit the **SERVICE/SUPPORT\Utility** page on GIGABYTE's website to download the latest version of apps.
+<sup>&amp;</sup> Please visit the **SERVICE/SUPPORT\Utility** page on GIGABYTE's website to download the latest version of apps.
 
 # <span id="page-11-0"></span>**2-3 Installing the CPU and CPU Cooler**
 
@@ -442,7 +442,7 @@ Follow the steps below to correctly install your expansion card in the expansion
 
 ![](images/_page_16_Picture_13.jpeg)
 
-<sup>&</sup>amp; Please visit GIGABYTE's website for details on using PCIe EZ-Latch Plus. https://www.gigabyte.com/WebPage/922/removePCIE.html
+<sup>&amp;</sup> Please visit GIGABYTE's website for details on using PCIe EZ-Latch Plus. https://www.gigabyte.com/WebPage/922/removePCIE.html
 
 # <span id="page-17-0"></span>**2-6 Back Panel Connectors**
 
@@ -1107,7 +1107,7 @@ For instructions on using the Q-Flash and Q-Flash Plus utilities, please navigat
 - It is recommended that you not alter the default settings (unless you need to) to prevent system instability or other unexpected results. Inadequately altering the settings may result in system's failure to boot. If this occurs, try to clear the CMOS values and reset the board to default values.
 - Refer to the introductions of the battery/clear CMOS jumper/button in Chapter 2 or navigate to the "BIOS Setup" page of GIGABYTE's website and search for "Load Optimized Defaults" for how to clear the CMOS values.
 
-<sup>&</sup>amp; Please visit GIGABYTE's website for details on configuring BIOS Setup. https://www.gigabyte.com/WebPage/1081/amd800-bios.html
+<sup>&amp;</sup> Please visit GIGABYTE's website for details on configuring BIOS Setup. https://www.gigabyte.com/WebPage/1081/amd800-bios.html
 
 # **Startup Screen:**
 
@@ -1203,7 +1203,7 @@ An M.2 PCIe SSD cannot be used to set up a RAID set with a SATA hard drive.
 
 (Note) Only available on NVMe SSDs with the AMD Ryzen™ 9000 Series Processors.
 
-<sup>&</sup>amp; Please visit GIGABYTE's website for details on configuring a RAID array. https://www.gigabyte.com/WebPage/1080/amd800-raid.html
+<sup>&amp;</sup> Please visit GIGABYTE's website for details on configuring a RAID array. https://www.gigabyte.com/WebPage/1080/amd800-raid.html
 
 # <span id="page-40-0"></span>**5-2 Debug LED Codes**
 

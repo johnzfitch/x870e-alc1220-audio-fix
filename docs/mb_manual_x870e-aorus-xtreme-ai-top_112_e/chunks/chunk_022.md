@@ -12,4 +12,4 @@ Follow the steps below to correctly install your expansion card in the expansion
 - 6. Turn on your computer. If necessary, go to BIOS Setup to make any required BIOS changes for your expansion card(s).
 - 7. Install the driver provided with the expansion card in your operating system.  
 ![](images/_page_16_Picture_13.jpeg)  
-<sup>&</sup>amp; Please visit GIGABYTE's website for details on using PCIe EZ-Latch Plus. https://www.gigabyte.com/WebPage/922/removePCIE.html
+<sup>&amp;</sup> Please visit GIGABYTE's website for details on using PCIe EZ-Latch Plus. https://www.gigabyte.com/WebPage/922/removePCIE.html

@@ -10,4 +10,4 @@ For instructions on using the Q-Flash and Q-Flash Plus utilities, please navigat
 - Because BIOS flashing is potentially risky, if you do not encounter problems using the current version of BIOS, it is recommended that you not flash the BIOS. To flash the BIOS, do it with caution. Inadequate BIOS flashing may result in system malfunction.
 - It is recommended that you not alter the default settings (unless you need to) to prevent system instability or other unexpected results. Inadequately altering the settings may result in system's failure to boot. If this occurs, try to clear the CMOS values and reset the board to default values.
 - Refer to the introductions of the battery/clear CMOS jumper/button in Chapter 2 or navigate to the "BIOS Setup" page of GIGABYTE's website and search for "Load Optimized Defaults" for how to clear the CMOS values.  
-<sup>&</sup>amp; Please visit GIGABYTE's website for details on configuring BIOS Setup. https://www.gigabyte.com/WebPage/1081/amd800-bios.html
+<sup>&amp;</sup> Please visit GIGABYTE's website for details on configuring BIOS Setup. https://www.gigabyte.com/WebPage/1081/amd800-bios.html

@@ -70,4 +70,4 @@
 | Form<br>Factor     | Š<br>E-ATX<br>Form<br>Factor;<br>30.5cm<br>x<br>26.9cm                               |  
 <sup>\*</sup> GIGABYTE reserves the right to make any changes to the product specifications and product-related information without prior notice.  
 https://www.gigabyte.com/Support/Utility/Motherboard?m=ut  
-<sup>&</sup>amp; Please visit the **SERVICE/SUPPORT\Utility** page on GIGABYTE's website to download the latest version of apps.
+<sup>&amp;</sup> Please visit the **SERVICE/SUPPORT\Utility** page on GIGABYTE's website to download the latest version of apps.
