@@ -1,0 +1,2 @@
+<!-- Chunk 16 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 53 -->
+This function allows you to load a previously saved BIOS profile without the hassles of reconfiguring the BIOS settings. Or you can select **Select File in HDD/FDD/USB** to load a profile from your storage device.

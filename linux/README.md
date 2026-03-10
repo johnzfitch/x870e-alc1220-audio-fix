@@ -13,15 +13,18 @@ Run the automated script:
 Or manually:
 
 ```bash
+# Resolve the Realtek ALC1220 card dynamically
+CARD="$(for codec in /proc/asound/card*/codec*; do grep -q '^Codec: Realtek ALC1220$' "$codec" 2>/dev/null && card="${codec%/codec*}" && echo "${card##*card}" && break; done)"
+
 # Disable auto-mute
-amixer -c 2 cset numid=9 0
+amixer -c "$CARD" cset name='Auto-Mute Mode' Disabled
 
 # Enable both outputs
-amixer -c 2 cset numid=2 on,on  # Line Out
-amixer -c 2 cset numid=3 on,on  # Headphones
+amixer -c "$CARD" cset name='Line Out Playback Switch' on,on
+amixer -c "$CARD" cset name='Headphone Playback Switch' on,on
 
 # Set volume
-amixer -c 2 sset Master 100%
+amixer -c "$CARD" sset Master 100%
 
 # Save settings
 sudo alsactl store
@@ -30,7 +33,7 @@ sudo alsactl store
 ## Requirements
 
 - `alsa-utils` package (for amixer/alsactl)
-- Realtek ALC1220 codec (card 2 by default)
+- Realtek ALC1220 codec (card number varies by system)
 
 Install on Arch Linux:
 ```bash
@@ -54,12 +57,12 @@ sudo apt install alsa-utils
 
 ```bash
 # Check auto-mute is disabled
-amixer -c 2 cget numid=9
+amixer -c "$CARD" cget name='Auto-Mute Mode'
 # Should show: values=0
 
 # Check outputs enabled
-amixer -c 2 cget numid=2  # Line Out: on,on
-amixer -c 2 cget numid=3  # Headphone: on,on
+amixer -c "$CARD" cget name='Line Out Playback Switch'
+amixer -c "$CARD" cget name='Headphone Playback Switch'
 ```
 
 ## PipeWire/PulseAudio
@@ -73,7 +76,7 @@ pactl set-card-profile alsa_card.pci-0000_7a_00.6 "output:analog-stereo+input:an
 ## Visual Mixer
 
 ```bash
-alsamixer -c 2
+alsamixer -c "$CARD"
 ```
 
 ## Troubleshooting
@@ -82,10 +85,12 @@ alsamixer -c 2
 
 Find your ALC1220 card:
 ```bash
-cat /proc/asound/cards | grep -i realtek
+for codec in /proc/asound/card*/codec*; do
+  grep -H '^Codec: Realtek ALC1220$' "$codec"
+done
 ```
 
-Edit scripts to use correct card number if not 2.
+Use the detected `CARD` value in the manual `amixer` commands. `fix-audio.sh` auto-detects the ALC1220 card and addresses the controls by name.
 
 ### Settings Lost After Reboot
 

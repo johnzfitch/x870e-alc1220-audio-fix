@@ -1,0 +1,3 @@
+<!-- Chunk 21 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 110 -->
+Connect your audio device and select **DTS:X Ultra** on the Start menu. The **Content Mode** main menu allows you to select content modes including Music, Video, and Movies, or you can select specifically tuned sound modes, including Strategy, RPG, and Shooter, to suit different game genres. The **Custom Audio** allows you to create customized audio profiles based on personal preference for later use.  
+![](images/_page_9_Picture_12.jpeg)

@@ -1,0 +1,2 @@
+<!-- Chunk 36 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 65 -->
+These sections provide memory timing settings. Note: Your system may become unstable or fail to boot after you make changes on the memory timings. If this occurs, please reset the board to default values by loading optimized defaults or clearing the CMOS values.

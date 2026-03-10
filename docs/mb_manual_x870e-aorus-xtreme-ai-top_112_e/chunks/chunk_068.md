@@ -1,0 +1,2 @@
+<!-- Chunk 68 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 56 -->
+Go to GIGABYTE's website, browse to the motherboard model's web page, download the **AMD RAID Preinstall Driver** file on the **Support\Download\SATA RAID/AHCI** page, unzip the file and copy the files to your USB thumb drive.

@@ -1,0 +1,2 @@
+<!-- Chunk 19 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 45 -->
+Allows you to manually set the CPU base clock in 0.01 MHz increments. **Important:** It is highly recommended that the CPU frequency be set in accordance with the CPU specifications.

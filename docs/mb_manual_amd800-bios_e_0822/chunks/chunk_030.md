@@ -1,0 +1,2 @@
+<!-- Chunk 30 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 46 -->
+Allows the BIOS to read the SPD data on XMP/EXPO memory module(s) to enhance memory performance when enabled. Selections are available only when an XMP or EXPO memory module is installed.

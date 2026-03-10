@@ -1,0 +1,2 @@
+<!-- Chunk 12 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 47 -->
+Enables or disables the fan/pump stop function. You can set the temperature limit using the temperature curve. The fan or pump stops operation when the temperature is lower than the limit.

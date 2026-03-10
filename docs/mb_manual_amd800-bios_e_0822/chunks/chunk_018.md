@@ -1,0 +1,4 @@
+<!-- Chunk 18 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 162 -->
+![](images/_page_8_Picture_1.jpeg)  
+![](images/_page_8_Picture_2.jpeg)  
+Whether the system will work stably with the overclock/overvoltage settings you made is dependent on your overall system configurations. Incorrectly doing overclock/overvoltage may result in damage to CPU, chipset, or memory and reduce the useful life of these components. This page is for advanced users only and we recommend you not to alter the default settings to prevent system instability or other unexpected results. (Inadequately altering the settings may result in system's failure to boot. If this occurs, clear the CMOS values and reset the board to default values.)

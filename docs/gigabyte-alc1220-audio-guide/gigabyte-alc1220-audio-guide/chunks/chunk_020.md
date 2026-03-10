@@ -1,0 +1,2 @@
+<!-- Chunk 20 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 55 -->
+After you install the included motherboard drivers, make sure your Internet connection works properly. The system will automatically install DTS: X Ultra from the Microsoft Store. Restart the system after it is installed.

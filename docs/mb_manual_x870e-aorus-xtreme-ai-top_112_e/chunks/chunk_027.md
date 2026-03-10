@@ -1,0 +1,4 @@
+<!-- Chunk 27 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 138 -->
+The HDMI port is HDCP 2.3 compliant and supports Dolby TrueHD and DTS HD Master Audio formats. It also supports up to 192KHz/24bit 7.1-channel LPCM audio output. You can use this port to connect your HDMI-supported monitor. The maximum supported resolution is 4096x2160@60 Hz, but the actual resolutions supported are dependent on the monitor being used.  
+![](images/_page_17_Picture_14.jpeg)  
+After installing the HDMI device, make sure to set the default sound playback device to HDMI. (The item name may differ depending on your operating system.)

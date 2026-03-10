@@ -14,11 +14,12 @@ if %errorLevel% neq 0 (
 
 echo Restoring default settings...
 
-reg delete "HKLM\SOFTWARE\Realtek\Audio\HDA\Settings" /v JackDetection /f >nul 2>&1
-reg delete "HKLM\SOFTWARE\Realtek\Audio\HDA\Settings" /v AutoMuteRear /f >nul 2>&1
-reg delete "HKLM\SOFTWARE\WOW6432Node\Realtek\Audio\HDA\Settings" /v JackDetection /f >nul 2>&1
-reg delete "HKLM\SOFTWARE\WOW6432Node\Realtek\Audio\HDA\Settings" /v AutoMuteRear /f >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0restore-defaults.ps1"
+if %errorLevel% neq 0 (
+    echo.
+    echo ERROR: The PowerShell restore failed.
+    pause
+    exit /b 1
+)
 
-echo Done! Default auto-mute behavior restored.
-echo Restart your computer for changes to take effect.
 pause

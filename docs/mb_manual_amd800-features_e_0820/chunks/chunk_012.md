@@ -1,0 +1,2 @@
+<!-- Chunk 12 | Source: mb_manual_amd800-features_e_0820.pdf | Est. Tokens: 102 -->
+Click the **Settings** button on the main menu. In the **Settings** dialog box, select the source partition and destination partition and click **OK**. The initial backup will start after 10 minutes and regular backup will be performed hourly. Note: By default, all partitions on the system drive are selected as the backup source. The backup destination cannot be on the same partition as the backup source.

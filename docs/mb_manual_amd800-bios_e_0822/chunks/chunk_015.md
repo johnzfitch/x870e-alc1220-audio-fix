@@ -1,0 +1,2 @@
+<!-- Chunk 15 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 47 -->
+This function allows you to save the current settings to a profile. You can save the profile in the BIOS or select **Select File in HDD/FDD/USB** to save the profile to your storage device.

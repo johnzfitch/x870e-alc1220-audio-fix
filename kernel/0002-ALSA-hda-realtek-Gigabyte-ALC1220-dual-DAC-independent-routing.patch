@@ -1,0 +1,190 @@
+From: Zack <zack@example.com>
+Date: Mon, 10 Mar 2026 00:00:00 +0000
+Subject: [PATCH 2/2] ALSA: hda/realtek: enable dual-DAC routing on Gigabyte
+ ALC1220 boards (0x1458:0xa0d5)
+
+DRAFT — depends on Phase 2 runtime probe results.
+Apply only after confirming which variant (A, B, or C) matches hardware.
+
+The ALC1220 codec on Gigabyte X570S/X870E Aorus boards has five
+hardware connections on Pin 0x1b (rear line-out):
+
+  0x0c (DAC 0x02), 0x0d (DAC 0x03), 0x0e (DAC 0x04),
+  0x0f (DAC 0x05), 0x26 (DAC 0x25)
+
+The existing ALC1220_FIXUP_GB_X570 quirk overrides this to {0x0c}
+only, forcing both Pin 0x14 (front HP, hardwired to 0x0c) and Pin
+0x1b to share DAC 0x02.
+
+With the connection list unrestricted, the generic HDA parser can
+assign DAC 0x03 to Pin 0x1b as an independent output.  PipeWire
+then exposes two sinks, enabling per-application audio routing
+(e.g., Discord to headphones, music to speakers).
+
+Pin 0x14 remains on DAC 0x02 — it has exactly one hardware
+connection (0x0c) and cannot be remapped.
+
+This patch replaces the GB_AORUS_NO_AUTOMUTE fixup (from patch 1/2)
+with a dual-DAC variant that:
+ - Does NOT restrict 0x1b's connection list
+ - Keeps suppress_auto_mute (front HP insertion must not mute rear)
+ - Conditionally applies gb_x570 coefficient writes
+   (VARIANT A: omits coefs, VARIANT B: keeps coefs)
+
+Tested on: Gigabyte X870E AORUS XTREME AI TOP
+  ALC1220 codec, subsystem 0x1458:0xa0d5
+  AMD Ryzen HD Audio Controller [1022:15e3]
+  Kernel TODO
+
+Signed-off-by: Zack <zack@example.com>
+---
+ sound/pci/hda/patch_realtek.c | NN +++++++-------
+ 1 file changed, NN insertions(+), NN deletions(-)
+
+============================================================================
+VARIANT A: Coefs NOT needed (Phase 2b produced working dual-output)
+============================================================================
+
+The generic parser auto-assigns DACs without coefficient writes.
+This is the simplest possible fixup.
+
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ FIXUP_FUNC @@
+-/* Gigabyte boards where front-panel HP jack insertion should not
+- * mute the rear line-out.  Wraps the X570 DAC/coef fixup and
+- * additionally disables auto-mute.
+- */
+-static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
+-					       const struct hda_fixup *fix,
+-					       int action)
+-{
+-	struct alc_spec *spec = codec->spec;
+-
+-	alc1220_fixup_gb_x570(codec, fix, action);
+-	if (action == HDA_FIXUP_ACT_PRE_PROBE)
+-		spec->gen.suppress_auto_mute = 1;
+-}
++/* Gigabyte X570S/X870E Aorus: let the generic parser discover
++ * independent DACs for front HP (0x14) and rear line-out (0x1b).
++ * Pin 0x14 is hardwired to mixer 0x0c (DAC 0x02).
++ * Pin 0x1b has 5 connections; the parser assigns DAC 0x03 via 0x0d.
++ */
++static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
++					       const struct hda_fixup *fix,
++					       int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		spec->gen.suppress_auto_mute = 1;
++}
+
+============================================================================
+VARIANT B: Coefs needed (Phase 2b silent, Phase 2c restored audio)
+============================================================================
+
+The coefficient writes are required for the analog output stage,
+but they do not depend on the DAC routing.  Apply coefs without
+restricting 0x1b's connection list.
+
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ FIXUP_FUNC @@
+-static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
+-					       const struct hda_fixup *fix,
+-					       int action)
+-{
+-	struct alc_spec *spec = codec->spec;
+-
+-	alc1220_fixup_gb_x570(codec, fix, action);
+-	if (action == HDA_FIXUP_ACT_PRE_PROBE)
+-		spec->gen.suppress_auto_mute = 1;
+-}
++static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
++					       const struct hda_fixup *fix,
++					       int action)
++{
++	static const struct coef_fw gb_x570_coefs[] = {
++		WRITE_COEF(0x07, 0x03c0),
++		WRITE_COEF(0x1a, 0x01c1),
++		WRITE_COEF(0x1b, 0x0202),
++		WRITE_COEF(0x43, 0x3005),
++		{}
++	};
++	struct alc_spec *spec = codec->spec;
++
++	switch (action) {
++	case HDA_FIXUP_ACT_PRE_PROBE:
++		/* Do not override 0x1b connection list — let the generic
++		 * parser discover DAC 0x03 via mixer 0x0d as a second
++		 * independent output.  Pin 0x14 is hardwired to 0x0c.
++		 */
++		spec->gen.suppress_auto_mute = 1;
++		break;
++	case HDA_FIXUP_ACT_INIT:
++		alc_process_coef_fw(codec, gb_x570_coefs);
++		break;
++	}
++}
+
+============================================================================
+VARIANT C: Coefs needed AND parser doesn't auto-split (needs hint)
+============================================================================
+
+If the generic parser assigns both pins to DAC 0x02 despite 0x1b
+having multiple options, override 0x1b's connection list to {0x0d}
+only, forcing DAC 0x03.
+
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ FIXUP_FUNC @@
+-static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
+-					       const struct hda_fixup *fix,
+-					       int action)
+-{
+-	struct alc_spec *spec = codec->spec;
+-
+-	alc1220_fixup_gb_x570(codec, fix, action);
+-	if (action == HDA_FIXUP_ACT_PRE_PROBE)
+-		spec->gen.suppress_auto_mute = 1;
+-}
++static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
++					       const struct hda_fixup *fix,
++					       int action)
++{
++	/* Force 0x1b to mixer 0x0d (DAC 0x03), independent from 0x14's
++	 * hardwired path through 0x0c (DAC 0x02).
++	 */
++	static const hda_nid_t conn_0x14[] = { 0x0c };
++	static const hda_nid_t conn_0x1b[] = { 0x0d };
++	static const struct coef_fw gb_x570_coefs[] = {
++		WRITE_COEF(0x07, 0x03c0),
++		WRITE_COEF(0x1a, 0x01c1),
++		WRITE_COEF(0x1b, 0x0202),
++		WRITE_COEF(0x43, 0x3005),
++		{}
++	};
++	struct alc_spec *spec = codec->spec;
++
++	switch (action) {
++	case HDA_FIXUP_ACT_PRE_PROBE:
++		snd_hda_override_conn_list(codec, 0x14,
++					   ARRAY_SIZE(conn_0x14), conn_0x14);
++		snd_hda_override_conn_list(codec, 0x1b,
++					   ARRAY_SIZE(conn_0x1b), conn_0x1b);
++		spec->gen.suppress_auto_mute = 1;
++		break;
++	case HDA_FIXUP_ACT_INIT:
++		alc_process_coef_fw(codec, gb_x570_coefs);
++		break;
++	}
++}
+
+============================================================================
+NOTE: The fixup table entry, quirk table entry, and model name from
+patch 1/2 remain unchanged — only the function body changes.
+The enum ALC1220_FIXUP_GB_AORUS_NO_AUTOMUTE stays as-is.
+============================================================================
+--
+2.47.0

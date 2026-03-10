@@ -1,0 +1,2 @@
+<!-- Chunk 69 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 38 -->
+Boot from the Windows setup disc and perform standard OS installation steps. When the screen requesting you to load the driver appears, select **Browse**.

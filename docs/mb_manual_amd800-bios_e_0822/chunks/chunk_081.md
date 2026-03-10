@@ -1,0 +1,2 @@
+<!-- Chunk 81 | Source: mb_manual_amd800-bios_e_0822.pdf | Est. Tokens: 52 -->
+Sets the system date. The date format is week (read-only), month, date, and year. Use <Enter> to switch between the Month, Date, and Year fields and use the <Page Up> or <Page Down> key to set the desired value.

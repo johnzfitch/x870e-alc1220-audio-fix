@@ -1,0 +1,2 @@
+<!-- Chunk 24 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 103 -->
+Q-Flash Plus allows you to update the BIOS when your system is off (S5 shutdown state). Save the latest BIOS on a USB thumb drive and plug it into the dedicated port, and then you can now flash the BIOS automatically by simply pressing the Q-Flash Plus button. The Q-Flash Plus Button will flash when the BIOS matching and flashing activities start and will stop flashing when the main BIOS flashing is complete.

@@ -1,0 +1,3 @@
+<!-- Chunk 67 | Source: mb_manual_x870e-aorus-xtreme-ai-top_112_e.pdf | Est. Tokens: 138 -->
+With the correct BIOS settings, you are ready to install the operating system.  
+As some operating systems already include RAID driver, you do not need to install separate RAID driver during the Windows installation process. After the operating system is installed, we recommend that you install all required drivers from the GIGABYTE Control Center to ensure system performance and compatibility. If the operating system to be installed requires that you provide additional RAID driver during the OS installation process, please refer to the steps below:

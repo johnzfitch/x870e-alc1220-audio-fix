@@ -1,0 +1,2 @@
+<!-- Chunk 13 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 31 -->
+The following steps explain how to enable Stereo Mix (which may be needed when you want to record sound from your computer).

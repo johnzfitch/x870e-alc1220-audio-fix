@@ -1,0 +1,2 @@
+<!-- Chunk 8 | Source: mb_manual_amd800-features_e_0820.pdf | Est. Tokens: 39 -->
+This application is a simple and easy-to-use interface that allows users to fine-tune their system settings or do overclock/overvoltage in Windows environment.

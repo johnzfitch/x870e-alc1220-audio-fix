@@ -1,0 +1,2 @@
+<!-- Chunk 23 | Source: gigabyte-alc1220-audio-guide.pdf | Est. Tokens: 46 -->
+The system will connect to the Microsoft Store. When the DTS Sound Unbound application appears, click **Install** and follow the on-screen instructions to proceed with the installation.

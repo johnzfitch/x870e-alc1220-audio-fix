@@ -1,0 +1,2 @@
+<!-- Chunk 1 | Source: mb_manual_amd800-features_e_0820.pdf | Est. Tokens: 83 -->
+GIGABYTE Control Center (GCC) gives you easy access to a wealth of GIGABYTE apps that help you get the most from your GIGABYTE motherboard (Note). Using a simple, unified user interface, GCC allows you to easily launch all GIGABYTE apps installed on your system, check related updates online, and download the apps, drivers, and BIOS.
