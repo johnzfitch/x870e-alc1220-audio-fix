@@ -1,0 +1,108 @@
+From 824b9cc30eb9d2b81073493500d97cd9d3b9198b Mon Sep 17 00:00:00 2001
+From: John Zachary Fitch <zack@internetuniverse.org>
+Date: Tue, 10 Mar 2026 23:57:54 -0700
+Subject: [PATCH] ALSA: hda/realtek: enable dual-DAC on Gigabyte X570S/X870E
+ ALC1220
+
+The ALC1220 codec on Gigabyte X570S Aorus Master and X870E AORUS
+XTREME AI TOP boards (subsystem 0x1458:0xa0d5) has two usable output
+paths:
+
+  - Pin 0x14 (front HP): hardwired to mixer 0x0c -> DAC 0x02
+  - Pin 0x1b (rear line-out): 5 connections (0x0c 0x0d 0x0e 0x0f 0x26)
+
+The existing ALC1220_FIXUP_GB_X570 quirk overrides 0x1b's connection
+list to {0x0c} only, forcing both outputs onto DAC 0x02. It also does
+not suppress auto-mute, so inserting headphones silences the rear
+line-out.
+
+Desktop users need both outputs active simultaneously with independent
+DAC routing for per-application audio (e.g., Discord to headphones,
+music to speakers).
+
+Add ALC1220_FIXUP_GB_AORUS_NO_AUTOMUTE which:
+  - Does NOT restrict 0x1b's connection list, allowing the generic HDA
+    parser to assign DAC 0x03 (via mixer 0x0d) as an independent output
+  - Sets suppress_auto_mute so front HP insertion does not mute rear
+
+The coefficient writes from gb_x570 are not required for audio output
+on these boards, as confirmed by testing with model=generic and by
+reverse-engineering the Windows Realtek driver which applies no
+board-specific handling for this subsystem ID.
+
+Tested on: Gigabyte X870E AORUS XTREME AI TOP
+  ALC1220 codec, subsystem 0x1458:0xa0d5
+  AMD Ryzen HD Audio Controller [1022:15e3]
+  Kernel 6.18.13-arch1-1
+
+Signed-off-by: johnzfitch <johnzfitch@users.noreply.github.com>
+---
+ sound/hda/codecs/realtek/alc882.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/sound/hda/codecs/realtek/alc882.c b/sound/hda/codecs/realtek/alc882.c
+index 529fecd5ba..6b61719b96 100644
+--- a/sound/hda/codecs/realtek/alc882.c
++++ b/sound/hda/codecs/realtek/alc882.c
+@@ -54,6 +54,7 @@ enum {
+ 	ALC887_FIXUP_BASS_CHMAP,
+ 	ALC1220_FIXUP_GB_DUAL_CODECS,
+ 	ALC1220_FIXUP_GB_X570,
++	ALC1220_FIXUP_GB_AORUS_NO_AUTOMUTE,
+ 	ALC1220_FIXUP_CLEVO_P950,
+ 	ALC1220_FIXUP_CLEVO_PB51ED,
+ 	ALC1220_FIXUP_CLEVO_PB51ED_PINS,
+@@ -211,6 +212,20 @@ static void alc1220_fixup_gb_x570(struct hda_codec *codec,
+ 	}
+ }
+ 
++/* Gigabyte X570S/X870E Aorus boards: enable independent DAC routing
++ * by not restricting pin 0x1b's connection list, and suppress auto-mute
++ * so front headphone insertion does not silence rear line-out.
++ */
++static void alc1220_fixup_gb_aorus_no_automute(struct hda_codec *codec,
++					       const struct hda_fixup *fix,
++					       int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		spec->gen.suppress_auto_mute = 1;
++}
++
+ static void alc1220_fixup_clevo_p950(struct hda_codec *codec,
+ 				     const struct hda_fixup *fix,
+ 				     int action)
+@@ -514,6 +529,10 @@ static const struct hda_fixup alc882_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc1220_fixup_gb_x570,
+ 	},
++	[ALC1220_FIXUP_GB_AORUS_NO_AUTOMUTE] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc1220_fixup_gb_aorus_no_automute,
++	},
+ 	[ALC1220_FIXUP_CLEVO_P950] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc1220_fixup_clevo_p950,
+@@ -635,7 +654,7 @@ static const struct hda_quirk alc882_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1458, 0xa0b8, "Gigabyte AZ370-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
+ 	SND_PCI_QUIRK(0x1458, 0xa0cd, "Gigabyte X570 Aorus Master", ALC1220_FIXUP_GB_X570),
+ 	SND_PCI_QUIRK(0x1458, 0xa0ce, "Gigabyte X570 Aorus Xtreme", ALC1220_FIXUP_GB_X570),
+-	SND_PCI_QUIRK(0x1458, 0xa0d5, "Gigabyte X570S Aorus Master", ALC1220_FIXUP_GB_X570),
++	SND_PCI_QUIRK(0x1458, 0xa0d5, "Gigabyte X570S/X870E Aorus", ALC1220_FIXUP_GB_AORUS_NO_AUTOMUTE),
+ 	SND_PCI_QUIRK(0x1462, 0x11f7, "MSI-GE63", ALC1220_FIXUP_CLEVO_P950),
+ 	SND_PCI_QUIRK(0x1462, 0x1228, "MSI-GP63", ALC1220_FIXUP_CLEVO_P950),
+ 	SND_PCI_QUIRK(0x1462, 0x1229, "MSI-GP73", ALC1220_FIXUP_CLEVO_P950),
+@@ -718,6 +737,7 @@ static const struct hda_model_fixup alc882_fixup_models[] = {
+ 	{.id = ALC887_FIXUP_ASUS_BASS, .name = "asus-bass"},
+ 	{.id = ALC1220_FIXUP_GB_DUAL_CODECS, .name = "dual-codecs"},
+ 	{.id = ALC1220_FIXUP_GB_X570, .name = "gb-x570"},
++	{.id = ALC1220_FIXUP_GB_AORUS_NO_AUTOMUTE, .name = "gb-aorus-no-automute"},
+ 	{.id = ALC1220_FIXUP_CLEVO_P950, .name = "clevo-p950"},
+ 	{}
+ };
+
+base-commit: fd7df93013c5118812e63a52635dc6c3a805a1de
+-- 
+2.53.0
+

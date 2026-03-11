@@ -82,13 +82,14 @@ Currently overridden to {0x0c} by the gb_x570 fixup.
 |-------|--------|----------|
 | 1: Auto-mute fix | DONE | `kernel/0001-ALSA-*.patch` |
 | 2a: Read coefs | DONE | `kernel/probe-logs/phase2a-coef-read.log` |
-| 2b: model=generic boot | PREPARED | `kernel/probe-logs/test-generic.conf` + `probe.sh` |
-| 2c: Manual coef writes | PREPARED | `kernel/probe-logs/phase2c-apply-coefs.sh` |
-| 2d: Force connection select | PREPARED | `kernel/probe-logs/phase2d-select-dac.sh` |
-| 3: Kernel dual-DAC patch | DRAFT | `kernel/0002-ALSA-*.patch` (3 variants) |
-| 4: PipeWire dual-sink | DRAFT | `kernel/phase4/` (UCM + WirePlumber) |
+| 2b: model=generic boot | DONE | `kernel/probe-logs/test-generic.conf` + `probe.sh` |
+| 2c: Manual coef writes | SKIPPED | Coefs not needed (Variant A confirmed) |
+| 2d: Force connection select | DONE | Dual-DAC works: 0x1b→0x0d→DAC 0x03 |
+| 3: Kernel dual-DAC patch | READY | `kernel/0002-ALSA-*.patch` Variant A |
+| 4: PipeWire dual-sink | NEXT | `kernel/phase4/` (UCM + WirePlumber) |
 
-Next step: Phase 2b — install `test-generic.conf`, reboot, run `probe.sh`.
+Phase 2 result: Outcome #3 — dual-DAC routing works at hardware level,
+but PipeWire sees one sink. Phase 4 needed for per-app routing.
 
 ## Windows Driver RE
 
@@ -107,20 +108,19 @@ variant (X3D board, not our concern) in the same PDF.
 
 ## Key Files
 
+- `install.sh` — firmware patch installer (stock kernels, no patch needed)
 - `linux/fix-audio.sh` — runtime fix (production)
 - `linux/check-status.sh` — diagnostic
 - `linux/restore-automute.sh` — undo
-- `kernel/0001-ALSA-*.patch` — Phase 1 upstream kernel patch
-- `kernel/0002-ALSA-*.patch` — Phase 3 dual-DAC patch (draft, 3 variants)
-- `kernel/gigabyte-x870e-alc1220.fw` — HDA firmware patch file
-- `kernel/snd-hda-x870e.conf` — modprobe config
+- `kernel/gigabyte-x870e-alc1220.fw` — HDA firmware patch (dual-DAC + no-automute)
+- `kernel/snd-hda-x870e.conf` — modprobe config for firmware patch
+- `kernel/upstream/0001-ALSA-*.patch` — upstream submission patch (Variant A)
+- `kernel/upstream/SUBMISSION.md` — kernel submission guide
+- `kernel/0001-ALSA-*.patch` — Phase 1 patch (auto-mute only, wraps gb_x570)
+- `kernel/0002-ALSA-*.patch` — Phase 3 draft (3 variants, Variant A confirmed)
 - `kernel/DUAL-DAC-ROUTING-PLAN.md` — master plan
-- `kernel/probe-logs/probe.sh` — universal state capture (all phases)
-- `kernel/probe-logs/phase2c-apply-coefs.sh` — manual coef writer
-- `kernel/probe-logs/phase2d-select-dac.sh` — force DAC 0x03 on 0x1b
-- `kernel/phase4/ucm2-dual-dac.conf` — UCM2 dual-output profile
-- `kernel/phase4/51-alc1220-dual-sink.lua` — WirePlumber split rule
-- `kernel/phase4/phase4-check.sh` — PipeWire dual-sink verifier
+- `kernel/probe-logs/` — hardware probing scripts and logs
+- `kernel/phase4/` — PipeWire UCM + WirePlumber configs (drafts)
 - `docs/` — board manuals (llmx indexed)
 - `drivers/bios/` — BIOS F11 image
 - `drivers/realtek/` — Windows Realtek DCH driver 6.0.9927.1

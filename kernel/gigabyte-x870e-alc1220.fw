@@ -5,5 +5,10 @@
 0x14 0x0221401f
 0x1b 0x01014010
 
-[model]
-gb-aorus-no-automute
+[verb]
+; SET_CONNECT_SEL on pin 0x1b to index 1 (mixer 0x0d -> DAC 0x03)
+; Format: nid verb_param (verb 0x701 << 8 | param 0x01 = 0x70101)
+0x1b 0x70101
+
+[hint]
+auto_mute_mode = disabled
